@@ -1,7 +1,7 @@
 {
-  "name": "matchday-lite",
+  "name": "olofofo-tv",
   "version": "1.0.0",
   "private": true,
-  "description": "A lightweight installable football match guide",
+  "description": "An installable football fixture and match coverage guide",
   "scripts": { "start": "node server.js" }
 }

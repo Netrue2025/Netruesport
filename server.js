@@ -149,7 +149,7 @@ async function feed() {
   const results = await Promise.all(sources.map(async source => {
     try {
       if (source.kind === 'scoreboard') {
-        const response = await fetch(source.apiUrl, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; MatchdayLite/1.0; +fixture summaries)', accept: 'application/json' }, signal: AbortSignal.timeout(18000) });
+        const response = await fetch(source.apiUrl, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; OlofofoTV/1.0; +fixture summaries)', accept: 'application/json' }, signal: AbortSignal.timeout(18000) });
         if (!response.ok) throw new Error(`HTTP ${response.status} at ESPN scoreboard`);
         const matches = extractEspn(await response.json(), source);
         const note = matches.length ? 'Scores, schedules and match centers only; this feed does not provide a stream.' : 'No soccer events were exposed on this refresh. This channel provides scores and match centers, not streams.';
@@ -158,7 +158,7 @@ async function feed() {
       }
       const pages = source.pages || [source.url];
       const pageResults = await Promise.all(pages.map(async (pageUrl, index) => {
-        const response = await fetch(pageUrl, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; MatchdayLite/1.0; +fixture summaries)' }, signal: AbortSignal.timeout(18000) });
+        const response = await fetch(pageUrl, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; OlofofoTV/1.0; +fixture summaries)' }, signal: AbortSignal.timeout(18000) });
         if (!response.ok) throw new Error(`HTTP ${response.status} at ${new URL(pageUrl).pathname}`);
         const html = await response.text();
         const pageSource = { ...source, url: pageUrl };
@@ -194,4 +194,4 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'content-type': mime[path.extname(file)] || 'application/octet-stream', 'cache-control': 'no-cache' }); res.end(data);
   });
 });
-server.listen(PORT, () => console.log(`Matchday Lite running at http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Olofofo TV running at http://localhost:${PORT}`));

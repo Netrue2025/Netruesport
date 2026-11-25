@@ -83,10 +83,14 @@ async function refresh() {
   render(); button.disabled = false;
 }
 document.querySelector('#refresh').addEventListener('click', refresh);
-document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {
-  document.querySelectorAll('.filter').forEach(b => b.classList.toggle('active', b === button));
-  activeFilter = button.dataset.filter; render();
-}));
+function setFilter(filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter').forEach(button => button.classList.toggle('active', button.dataset.filter === filter));
+  document.querySelectorAll('.mobile-nav [data-filter]').forEach(button => button.classList.toggle('active', button.dataset.filter === filter));
+  document.querySelector('.mobile-nav a[href="#matches"]')?.classList.toggle('active', filter === 'all');
+  render();
+}
+document.querySelectorAll('.filter, .mobile-nav [data-filter]').forEach(button => button.addEventListener('click', () => setFilter(button.dataset.filter)));
 document.querySelectorAll('.channel').forEach(button => button.addEventListener('click', () => {
   document.querySelectorAll('.channel').forEach(b => b.classList.toggle('active', b === button));
   activeChannel = button.dataset.channel; render();
